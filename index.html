@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shahid Akram Shaik — Generative AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #06091A;
+    --surface:   #0D1530;
+    --surface2:  #111D3A;
+    --border:    #1E2E55;
+    --cyan:      #00D4FF;
+    --cyan-dim:  rgba(0,212,255,0.12);
+    --cyan-glow: rgba(0,212,255,0.25);
+    --purple:    #7B5EA7;
+    --text:      #E8EEFF;
+    --muted:     #7A8BB0;
+    --white:     #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(6,9,26,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 18px;
+    color: var(--cyan); letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 80px 48px 60px;
+  }
+  .hero-canvas {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 680px;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(0,212,255,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px; font-weight: 500;
+    color: var(--cyan);
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--cyan); }
+  .hero-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+  }
+  .hero-desc {
+    font-size: 16px; color: var(--muted);
+    max-width: 560px; line-height: 1.75;
+    margin-bottom: 40px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 40px;
+  }
+  .tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text);
+  }
+  .tag.accent {
+    background: var(--cyan-dim);
+    border-color: rgba(0,212,255,0.3);
+    color: var(--cyan);
+  }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--cyan);
+    color: #06091A;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700; font-size: 15px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 500; font-size: 15px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; max-width: 1120px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 12px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 16px;
+    max-width: 560px; line-height: 1.75;
+    margin-bottom: 60px;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex; justify-content: center; gap: 80px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 700;
+    color: var(--cyan); letter-spacing: -1px;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    padding-left: 36px; margin-bottom: 56px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -5px; top: 6px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan-glow);
+  }
+  .timeline-item:first-child::before { background: var(--cyan); }
+  .exp-meta {
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .exp-role {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 19px; font-weight: 600;
+    color: var(--white);
+  }
+  .exp-company {
+    background: var(--cyan-dim);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 13px; font-weight: 600;
+    color: var(--cyan);
+  }
+  .exp-period {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 15px; color: var(--muted);
+    line-height: 1.7; margin-bottom: 10px;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--cyan); font-size: 13px;
+  }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .exp-tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover {
+    border-color: rgba(0,212,255,0.4);
+    transform: translateY(-2px);
+  }
+  .skill-card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(0,212,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+  .skill-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ── CERTS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex; gap: 20px; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: rgba(0,212,255,0.4); }
+  .cert-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .cert-icon.anthropic { background: rgba(210,130,75,0.15); border: 1px solid rgba(210,130,75,0.3); }
+  .cert-icon.google    { background: rgba(66,133,244,0.15); border: 1px solid rgba(66,133,244,0.3); }
+  .cert-icon.microsoft { background: rgba(0,120,212,0.15); border: 1px solid rgba(0,120,212,0.3); }
+  .cert-body {}
+  .cert-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .cert-issuer { font-size: 13px; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  .contact-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 64px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-wrapper::before {
+    content: '';
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-links {
+    display: flex; justify-content: center; gap: 20px;
+    flex-wrap: wrap; margin-top: 36px;
+  }
+  .contact-link {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    font-size: 14px; font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+  .contact-link span { font-size: 18px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    text-align: center;
+    font-size: 13px; color: var(--muted);
+  }
+
+  /* ── DIVIDER ── */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero, section { padding: 80px 20px 60px; }
+    .stats-bar { gap: 40px; padding: 28px 20px; }
+    .contact-wrapper { padding: 36px 24px; }
+    footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Shahid.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about" style="padding-top:120px; max-width:100%;">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Available for opportunities</div>
+    <h1>Shahid<br/><span>Akram Shaik</span></h1>
+    <p class="hero-sub">Generative AI Engineer · Agentic AI · LLMOps</p>
+    <p class="hero-desc">
+      Generative AI Engineer at Accenture building production-grade agentic AI systems. I design and ship
+      multi-agent orchestration pipelines, RAG systems, and async AI microservices —
+      working across LangGraph, GPT-4o, Claude, and Gemini ecosystems.
+    </p>
+    <div class="hero-tags">
+      <span class="tag accent">LangGraph</span>
+      <span class="tag accent">Multi-Agent Orchestration</span>
+      <span class="tag accent">RAG</span>
+      <span class="tag">LangChain</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Azure OpenAI</span>
+      <span class="tag">RabbitMQ</span>
+      <span class="tag">MCP</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn-outline">View Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">2+</div>
+    <div class="stat-label">Years at Accenture</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Production Agentic Systems</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3</div>
+    <div class="stat-label">AI Certifications</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">15+</div>
+    <div class="stat-label">LangGraph Event Workflows</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">50+</div>
+    <div class="stat-label">Research Topic Strategies</div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2 class="section-title">Professional Experience</h2>
+  <p class="section-sub">2+ years delivering agentic AI systems in enterprise environments at Accenture, Bengaluru.</p>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="exp-meta">
+        <span class="exp-role">AI/ML Computational Science Analyst</span>
+        <span class="exp-company">Accenture</span>
+      </div>
+      <div class="exp-period">June 2026 – Present &nbsp;·&nbsp; Bengaluru, India</div>
+      <ul class="exp-bullets">
+        <li>Architected a fully asynchronous agentic system on RabbitMQ — a single LangGraph Orchestrator routes action types to dedicated agent flows, publishing results via dual channels for live UI updates and backend API delivery.</li>
+        <li>Implemented parallel content generation across multiple independent topics with dependency planning, sequencing inter-dependent topics correctly before execution.</li>
+        <li>Built per-topic LangGraph pipelines with Safety → Research → Write → Quality-check stages and auto-retry logic ensuring output meets quality thresholds before delivery.</li>
+        <li>Developed a stateful multi-turn conversational agent with PII scrubbing, dynamic scope-based routing, LLM tool use, and a final quality gate on every response.</li>
+        <li>Engineered locale-aware content generation producing output in requested language alongside an English copy — supporting US English, German, and Japanese deployments.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">LangGraph</span>
+        <span class="exp-tag">RabbitMQ</span>
+        <span class="exp-tag">Multi-Agent</span>
+        <span class="exp-tag">asyncio</span>
+        <span class="exp-tag">Localization</span>
+        <span class="exp-tag">Conversational AI</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="exp-meta">
+        <span class="exp-role">AI/ML Computational Science Associate</span>
+        <span class="exp-company">Accenture</span>
+      </div>
+      <div class="exp-period">May 2024 – May 2026 &nbsp;·&nbsp; Bengaluru, India</div>
+      <ul class="exp-bullets">
+        <li>Built an agentic microservice to auto-generate structured, citation-backed market research reports — replacing manual research workflows by pulling evidence from web, uploaded documents, and keyword data APIs.</li>
+        <li>Designed a two-tier LangGraph orchestration system: top-level router dispatching 15+ event types, and per-topic worker graphs with runtime-conditional entry points across Gemini grounded search, Azure AI Search RAG, URL scraping, and SEMrush.</li>
+        <li>Implemented LangChain structured output with Pydantic models and a manual ReAct tool-calling loop; topics run concurrently under asyncio timeout isolation with results streamed incrementally to the UI.</li>
+        <li>Built a downstream enrichment pipeline: auto-generated charts (6 types) with JSON schema guardrails, inline text highlights, and footnote extraction mapping citations to source URLs.</li>
+        <li>Integrated inline DeepEval quality scoring per node, full audit trail in PostgreSQL + Azure Blob, and secretless production auth via Azure Managed Identity.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">LangGraph</span>
+        <span class="exp-tag">RAG</span>
+        <span class="exp-tag">Azure AI Search</span>
+        <span class="exp-tag">Gemini</span>
+        <span class="exp-tag">DeepEval</span>
+        <span class="exp-tag">GPT-4o</span>
+        <span class="exp-tag">FastAPI</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Expertise</div>
+  <h2 class="section-title">Technical Skills</h2>
+  <p class="section-sub">From LangGraph orchestration to cloud infrastructure — end-to-end agentic AI delivery.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-icon">🤖</div>
+      <div class="skill-card-title">Agentic AI</div>
+      <div class="skill-pills">
+        <span class="skill-pill">LangGraph</span>
+        <span class="skill-pill">LangChain</span>
+        <span class="skill-pill">Multi-Agent Orchestration</span>
+        <span class="skill-pill">MCP</span>
+        <span class="skill-pill">Conditional State Machines</span>
+        <span class="skill-pill">Checkpointing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🧠</div>
+      <div class="skill-card-title">LLMs & Models</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Azure OpenAI GPT-4o</span>
+        <span class="skill-pill">Anthropic Claude</span>
+        <span class="skill-pill">Google Gemini 2.5 Flash</span>
+        <span class="skill-pill">text-embedding-ada-002</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🔍</div>
+      <div class="skill-card-title">RAG & Search</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Azure AI Search</span>
+        <span class="skill-pill">Vector Embeddings</span>
+        <span class="skill-pill">Document Ingestion</span>
+        <span class="skill-pill">Gemini Grounded Search</span>
+        <span class="skill-pill">DuckDuckGo</span>
+        <span class="skill-pill">SEMrush API</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">⚙️</div>
+      <div class="skill-card-title">LLMOps</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Prompt Engineering</span>
+        <span class="skill-pill">Structured Output</span>
+        <span class="skill-pill">DeepEval</span>
+        <span class="skill-pill">LLM Guardrails</span>
+        <span class="skill-pill">Model Fallback</span>
+        <span class="skill-pill">JSON Schema Validation</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">⚡</div>
+      <div class="skill-card-title">Backend & Async</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">RabbitMQ</span>
+        <span class="skill-pill">asyncio</span>
+        <span class="skill-pill">PostgreSQL</span>
+        <span class="skill-pill">SQLAlchemy</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">☁️</div>
+      <div class="skill-card-title">Cloud & DevOps</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Azure OpenAI</span>
+        <span class="skill-pill">Azure Blob Storage</span>
+        <span class="skill-pill">Azure Key Vault</span>
+        <span class="skill-pill">Managed Identity</span>
+        <span class="skill-pill">Docker</span>
+        <span class="skill-pill">Kubernetes</span>
+        <span class="skill-pill">CI/CD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Credentials</div>
+  <h2 class="section-title">Certifications</h2>
+  <p class="section-sub">Certified across three major AI ecosystems — Anthropic, Google Cloud, and Microsoft Azure.</p>
+
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-icon anthropic">🔶</div>
+      <div class="cert-body">
+        <div class="cert-title">Claude Certified Architect – Foundations (CCA-F)</div>
+        <div class="cert-issuer">Anthropic</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon google">🔵</div>
+      <div class="cert-body">
+        <div class="cert-title">Professional Machine Learning Engineer</div>
+        <div class="cert-issuer">Google Cloud · 2025</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon microsoft">🔷</div>
+      <div class="cert-body">
+        <div class="cert-title">AI-900: Microsoft Azure AI Fundamentals</div>
+        <div class="cert-issuer">Microsoft</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2 class="section-title">Academic Background</h2>
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px 40px; display:flex; gap:32px; align-items:center; flex-wrap:wrap;">
+    <div style="width:56px;height:56px;border-radius:14px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.25);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">🎓</div>
+    <div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:6px;">B.Tech — Computer Science & Engineering</div>
+      <div style="color:var(--muted);font-size:15px;">Sri Venkateswara University College of Engineering</div>
+      <div style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;">
+        <span class="tag">Graduated 2023</span>
+        <span class="tag accent">CGPA: 7.81 / 10</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="section-label" style="margin-bottom:16px;">Let's Connect</div>
+    <h2 class="section-title" style="margin-bottom:12px;">Open to Opportunities</h2>
+    <p style="color:var(--muted);font-size:16px;max-width:480px;margin:0 auto;line-height:1.75;">
+      I'm actively looking for Generative AI Engineering roles focused on agentic systems, LLMOps, and multi-agent orchestration. Let's talk.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:shaikakram7733@gmail.com" class="contact-link">
+        <span>✉️</span> shaikakram7733@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/shahid-akram-shaik-5a5222220" target="_blank" class="contact-link">
+        <span>💼</span> LinkedIn Profile
+      </a>
+      <a href="https://github.com/akram2407" target="_blank" class="contact-link">
+        <span>💻</span> GitHub
+      </a>
+      <a href="https://akram2407.github.io" target="_blank" class="contact-link">
+        <span>🌐</span> Portfolio
+      </a>
+      <a href="tel:+919014140050" class="contact-link">
+        <span>📞</span> +91-9014140050
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Shahid Akram Shaik &nbsp;·&nbsp; Generative AI Engineer &nbsp;·&nbsp; Bengaluru, India</p>
+</footer>
+
+<!-- HERO CANVAS — animated node graph referencing LangGraph -->
+<script>
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes, animId;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    buildNodes();
+  }
+
+  function buildNodes(){
+    nodes = Array.from({length: 55}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 2 + 1,
+      pulse: Math.random() * Math.PI * 2
+    }));
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw edges
+    for(let i = 0; i < nodes.length; i++){
+      for(let j = i+1; j < nodes.length; j++){
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if(d < 130){
+          const alpha = (1 - d/130) * 0.18;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
+          ctx.lineWidth = 0.7;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      n.pulse += 0.02;
+      const glow = 0.4 + 0.3 * Math.sin(n.pulse);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(0,212,255,${glow})`;
+      ctx.fill();
+
+      // Move
+      n.x += n.vx; n.y += n.vy;
+      if(n.x < 0 || n.x > W) n.vx *= -1;
+      if(n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener('resize', ()=>{ cancelAnimationFrame(animId); resize(); draw(); });
+})();
+</script>
+
+</body>
+</html>
